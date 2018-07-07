@@ -11,37 +11,17 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 @Component
 public class UserRepository implements UserDetailsService {
     private final Map<String, UserDetails> users = new HashMap<>();
-    private final Map<String, UserDetails> tokenMap = new HashMap<>();
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         if(!users.containsKey(s)) {
             throw new UsernameNotFoundException(s);
         }
-        UserDetails user = users.get(s);
-        return new User(
-                user.getUsername(),
-                user.getPassword(),
-                user.getAuthorities());
-    }
-
-    public UserDetails loadByToken(String s) throws UsernameNotFoundException {
-        if(!tokenMap.containsKey(s)) {
-            throw new UsernameNotFoundException(s);
-        }
-        return tokenMap.get(s);
-    }
-
-    public String login(UserDetails details) {
-        String token = UUID.randomUUID().toString();
-        tokenMap.put(token, details);
-
-        return token;
+        return users.get(s);
     }
 
     public void addUser(UserDetails user) {

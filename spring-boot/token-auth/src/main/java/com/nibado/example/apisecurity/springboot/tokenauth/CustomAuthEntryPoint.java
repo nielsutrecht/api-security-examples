@@ -24,7 +24,7 @@ public class CustomAuthEntryPoint extends BasicAuthenticationEntryPoint {
         response.addHeader("WWW-Authenticate", "Basic realm=" + getRealmName() + "");
 
         PrintWriter writer = response.getWriter();
-        writer.println( MAPPER.writeValueAsString(new ErrorResponse()));
+        writer.println(MAPPER.writeValueAsString(new ErrorResponse()));
     }
 
     @Override
